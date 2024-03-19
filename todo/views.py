@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from todo_list.models import TodoModel
 def home(request):
-    data = TodoModel.objects.filter(user = request.user)
-    return render(request, 'home.html', {'data': data})
+    if request.user.is_authenticated:
+        data = TodoModel.objects.filter(user = request.user)
+        return render(request, 'home.html', {'data': data})
+    else:
+        return render(request, 'home.html')
 
 def complete(request, id):
     item = TodoModel.objects.get(id=id)

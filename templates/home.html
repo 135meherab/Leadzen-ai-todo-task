@@ -3,11 +3,14 @@
 {% block content %}
 <div class="container card-body p-4 text-white">
 
+  {%if user.is_authenticated%}
     <div class="d-flex justify-content-between">
       <h2 class="text-black">Task List</h2>
       <h2><a href="{% url 'add_task_page'%}">Add Task</a></h2>
     </div>
-
+    {%endif%}
+    
+    {%if user.is_authenticated%}
     <table class="table text-white mb-0">
       <thead>
         <tr>
@@ -41,11 +44,11 @@
           </td>
         </tr>
         {%endfor%}
-
-      
       </tbody>
     </table>
-
+    {%else%}
+    <h1 class="text-black text-center">To add task Please Register first and then login.</h1>
+    {%endif%}
 
   </div>
 </div>
