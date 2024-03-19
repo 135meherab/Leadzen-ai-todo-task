@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock title %}
+{% block content %}
+<div class="container card-body p-4 text-white">
+
+    <div class="d-flex justify-content-between">
+      <h2 class="text-black">Task List</h2>
+      <h2><a href="{% url 'add_task_page'%}">Add Task</a></h2>
+    </div>
+
+    <table class="table text-white mb-0">
+      <thead>
+        <tr>
+          <th scope="col">Task</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Priority</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%for item in data%}
+        <tr class="fw-normal">
+          <td class="align-middle">
+            <span>{{item.title}}</span>
+          </td>
+          <td class="align-middle">
+            {{item.due_date}}
+          </td>
+          <td class="align-middle">
+            <h6 class="mb-0"><span class="badge {%if item.priority == 'HIGH'%} bg-danger {%elif item.priority == 'MEDIUM'%} bg-warning {%else%} bg-success{%endif%}">{{item.priority}}</span></h6>
+          </td>
+          <td class="align-middle">
+            {% if item.is_complete%}
+            <button class="btn btn-success" disabled>Completed</button>
+            {% else %}
+            <a href="{% url 'complete_task' item.id %}" data-mdb-toggle="tooltip" title="Done"><i
+                class="fas fa-check fa-lg text-success me-3"></i></a>
+            <a href="{% url 'delete_task' item.id %}" data-mdb-toggle="tooltip" title="Remove"><i
+                class="fas fa-trash-alt fa-lg text-warning"></i></a>
+            {%endif%}
+          </td>
+        </tr>
+        {%endfor%}
+
+      
+      </tbody>
+    </table>
+
+
+  </div>
+</div>
+
+{% endblock content %}
+
